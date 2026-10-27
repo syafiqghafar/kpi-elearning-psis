@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard KPI E-Learning SKT 2026 — POLYCC BIPD JPPKK</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
+    background: #f0f2f5;
+    color: #1f2328;
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ─── HEADER ─── */
+  .header { background: linear-gradient(135deg, #1a3a6e 0%, #2563b0 60%, #1a3a6e 100%); color: #fff; }
+  .header-inner {
+    max-width: 1200px; margin: 0 auto; padding: 20px 24px 16px;
+    display: flex; align-items: center; gap: 18px;
+  }
+  .logo-box {
+    width: 54px; height: 54px; background: #fff; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .logo-box svg { width: 34px; height: 34px; }
+  .header-text h1 { font-size: 19px; font-weight: 700; }
+  .header-text p { font-size: 12px; color: #b8d0f0; margin-top: 2px; }
+  .header-badges { margin-left: auto; display: flex; gap: 7px; flex-wrap: wrap; justify-content: flex-end; }
+  .badge {
+    background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px; padding: 4px 11px; font-size: 11px; font-weight: 600; color: #fff;
+  }
+
+  /* ─── NAV ─── */
+  .nav-bar { background: #152e5a; border-top: 1px solid rgba(255,255,255,0.1); }
+  .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; gap: 2px; overflow-x: auto; }
+  .nav-tab {
+    padding: 10px 15px; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.55);
+    cursor: pointer; border-bottom: 3px solid transparent; white-space: nowrap;
+    transition: color 0.2s, border-color 0.2s; user-select: none;
+  }
+  .nav-tab:hover { color: #fff; }
+  .nav-tab.active { color: #fff; border-bottom-color: #60a5fa; }
+
+  /* ─── MAIN ─── */
+  .main { max-width: 1200px; margin: 0 auto; padding: 24px; }
+
+  /* ─── STATS ROW ─── */
+  .stats-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin-bottom: 24px; }
+  .stat-card {
+    background: #fff; border: 1px solid #e5e7eb; border-radius: 10px;
+    padding: 15px 18px; display: flex; align-items: center; gap: 14px;
+    transition: box-shadow 0.2s;
+  }
+  .stat-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+  .stat-icon { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 22px; }
+  .stat-num { font-size: 26px; font-weight: 700; }
+  .stat-label { font-size: 11px; color: #57606a; line-height: 1.3; margin-top: 1px; }
+
+  /* ─── SECTION TITLE ─── */
+  .section-title {
+    font-size: 14px; font-weight: 700; color: #1f2328; margin-bottom: 14px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .section-title::before {
+    content: ''; width: 4px; height: 17px; background: #3b82d4; border-radius: 2px; display: inline-block;
+  }
+
+  /* ─── KPI CARD GRID ─── */
+  .kpi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 28px; }
+
+  .kpi-card {
+    background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; overflow: hidden;
+    display: flex; flex-direction: column;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .kpi-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.1); transform: translateY(-1px); }
+
+  .kpi-card-header { padding: 15px 18px 13px; border-bottom: 1px solid #f0f2f5; display: flex; gap: 11px; align-items: flex-start; }
+  .kpi-item-badge { font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 4px; white-space: nowrap; flex-shrink: 0; margin-top: 2px; border: 1px solid; }
+  .kpi-title-block h3 { font-size: 13px; font-weight: 700; line-height: 1.35; }
+  .kpi-type-tag { font-size: 11px; color: #57606a; margin-top: 3px; }
+
+  .kpi-progress { padding: 11px 18px; border-bottom: 1px solid #f0f2f5; }
+  .progress-header { display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 6px; color: #57606a; }
+  .progress-header strong { color: #1f2328; }
+  .progress-bg { height: 7px; background: #f0f2f5; border-radius: 4px; overflow: hidden; }
+  .progress-fill { height: 100%; border-radius: 4px; }
+
+  .kpi-desc { padding: 11px 18px; font-size: 12px; color: #57606a; border-bottom: 1px solid #f0f2f5; line-height: 1.55; }
+
+  .kpi-depts { padding: 11px 18px; border-bottom: 1px solid #f0f2f5; }
+  .kpi-depts-label { font-size: 10px; font-weight: 600; color: #8b949e; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 7px; }
+  .dept-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .dept-chip {
+    display: flex; align-items: center; gap: 5px;
+    padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; border: 1px solid;
+  }
+  .dept-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+
+  .kpi-links { padding: 11px 18px; }
+  .kpi-links-label { font-size: 10px; font-weight: 600; color: #8b949e; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 7px; }
+  .links-row { display: flex; flex-wrap: wrap; gap: 6px; }
+
+  .link-btn {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 5px 10px; border-radius: 6px; font-size: 11px; font-weight: 600;
+    text-decoration: none; border: 1px solid; transition: opacity 0.2s; cursor: pointer;
+  }
+  .link-btn:hover { opacity: 0.75; }
+  .link-btn.shoutstore { background: #fff3e0; border-color: #f59e0b; color: #b45309; }
+  .link-btn.polycc    { background: #ede9fe; border-color: #7c5cd8; color: #5b21b6; }
+  .link-btn.policy    { background: #e0f2fe; border-color: #3b82d4; color: #1d4ed8; }
+  .link-btn.cidog     { background: #dcfce7; border-color: #22c55e; color: #15803d; }
+  .link-btn.contact   { background: #fce7f3; border-color: #ec4899; color: #be185d; }
+
+  .kpi-pic {
+    padding: 10px 18px 13px; border-top: 1px solid #f0f2f5;
+    display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: auto;
+  }
+  .pic-info { display: flex; align-items: center; gap: 8px; }
+  .pic-avatar {
+    width: 28px; height: 28px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 700; color: #fff; flex-shrink: 0;
+  }
+  .pic-name { font-size: 11px; font-weight: 600; }
+  .pic-dept { font-size: 10px; color: #57606a; }
+  .unit-tag { font-size: 10px; background: #f7f8fa; border: 1px solid #e5e7eb; border-radius: 4px; padding: 3px 8px; color: #57606a; font-weight: 600; white-space: nowrap; }
+
+  /* ─── TABLE ─── */
+  .table-wrap { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; overflow: hidden; margin-bottom: 28px; }
+  .table-header { padding: 13px 18px; background: #f7f8fa; border-bottom: 1px solid #e5e7eb; font-size: 13px; font-weight: 700; }
+  table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  th { background: #f7f8fa; padding: 9px 14px; text-align: left; font-weight: 600; color: #57606a; font-size: 11px; text-transform: uppercase; letter-spacing: 0.4px; border-bottom: 1px solid #e5e7eb; white-space: nowrap; }
+  td { padding: 10px 14px; border-bottom: 1px solid #f0f2f5; vertical-align: middle; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #f7f8fa; }
+  .dept-cell { display: flex; flex-wrap: wrap; gap: 4px; }
+  .dept-tag { padding: 2px 7px; border-radius: 4px; font-size: 10px; font-weight: 700; color: #fff; white-space: nowrap; }
+  .link-tiny {
+    display: inline-flex; align-items: center; gap: 3px;
+    padding: 2px 7px; border-radius: 4px; font-size: 10px; font-weight: 600;
+    text-decoration: none; background: #e0f2fe; border: 1px solid #3b82d4; color: #1d4ed8; margin: 1px;
+  }
+  .link-tiny:hover { opacity: 0.75; }
+
+  /* ─── DETAIL PANEL ─── */
+  .detail-panel { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 22px 24px; margin-bottom: 18px; }
+  .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+  .detail-section-label { font-size: 10px; font-weight: 600; color: #8b949e; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+  .detail-desc { font-size: 13px; color: #1f2328; line-height: 1.7; }
+  .spec-row { display: flex; gap: 8px; font-size: 12px; margin-bottom: 4px; }
+  .spec-row span:first-child { color: #57606a; min-width: 130px; }
+  .dept-detail-card { border: 1px solid #e5e7eb; border-radius: 8px; padding: 10px 13px; margin-bottom: 7px; }
+  .dept-detail-card:last-child { margin-bottom: 0; }
+  .dept-detail-top { display: flex; align-items: center; gap: 8px; margin-bottom: 3px; }
+  .dept-detail-top span.name { font-size: 12px; font-weight: 600; }
+  .dept-detail-sub { font-size: 11px; color: #57606a; }
+  .note-box { border-radius: 8px; padding: 10px 13px; margin-top: 10px; }
+  .note-box-title { font-size: 11px; font-weight: 700; margin-bottom: 4px; }
+  .note-box-text { font-size: 11px; line-height: 1.55; }
+  .detail-links-wrap { margin-top: 18px; padding-top: 15px; border-top: 1px solid #f0f2f5; }
+  .ai-tools { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+  .ai-chip { background: #f5f3ff; border: 1px solid #7c5cd8; color: #5b21b6; padding: 3px 9px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+
+  /* ─── POLICY ─── */
+  .policy-section { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; overflow: hidden; margin-bottom: 22px; }
+  .policy-header { padding: 13px 18px; background: #f7f8fa; border-bottom: 1px solid #e5e7eb; font-size: 13px; font-weight: 700; }
+  .policy-grid { display: grid; grid-template-columns: repeat(3,1fr); }
+  .policy-item { padding: 13px 18px; border-right: 1px solid #f0f2f5; border-bottom: 1px solid #f0f2f5; }
+  .policy-item:nth-child(3n) { border-right: none; }
+  .policy-item:nth-last-child(-n+3) { border-bottom: none; }
+  .policy-label { font-size: 10px; font-weight: 600; color: #8b949e; text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 4px; }
+  .policy-val { font-size: 12px; font-weight: 500; }
+  .policy-val a { color: #3b82d4; text-decoration: none; font-weight: 600; }
+  .policy-val a:hover { text-decoration: underline; }
+
+  /* ─── TAB PANELS ─── */
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* ─── CHARTS ─── */
+  .charts-section { margin-bottom: 28px; }
+  .charts-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .charts-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 28px; }
+  .chart-card {
+    background: #fff; border: 1px solid #e5e7eb; border-radius: 12px;
+    padding: 16px 18px 14px; overflow: hidden;
+  }
+  .chart-title { font-size: 12px; font-weight: 700; color: #1f2328; margin-bottom: 3px; }
+  .chart-subtitle { font-size: 11px; color: #8b949e; margin-bottom: 12px; }
+  .chart-canvas-wrap { display: flex; justify-content: center; }
+  canvas { display: block; }
+  .chart-legend { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; justify-content: center; }
+  .legend-item { display: flex; align-items: center; gap: 5px; font-size: 10px; color: #57606a; }
+  .legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .legend-rect { width: 12px; height: 8px; border-radius: 2px; flex-shrink: 0; }
+
+  /* ─── FOOTER ─── */
+  .page-footer { text-align: center; padding: 14px; font-size: 11px; color: #8b949e; border-top: 1px solid #e5e7eb; margin-top: 4px; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 860px) {
+    .kpi-grid { grid-template-columns: 1fr; }
+    .stats-row { grid-template-columns: 1fr 1fr; }
+    .detail-grid { grid-template-columns: 1fr; }
+    .policy-grid { grid-template-columns: 1fr; }
+    .policy-item { border-right: none; }
+  }
+  @media (max-width: 560px) {
+    .stats-row { grid-template-columns: 1fr; }
+    .header-badges { display: none; }
+    .main { padding: 12px; }
+    .header-inner { padding: 14px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════
+     HEADER
+═══════════════════════════════════════ -->
+<div class="header">
+  <div class="header-inner">
+    <div class="logo-box">
+      <svg viewBox="0 0 34 34" fill="none">
+        <rect x="2" y="7" width="30" height="21" rx="3" fill="#1a3a6e"/>
+        <rect x="3" y="9" width="28" height="17" rx="2" fill="#2563b0"/>
+        <rect x="6" y="12" width="9" height="6" rx="1" fill="#60a5fa"/>
+        <rect x="17" y="12" width="10" height="3" rx="1" fill="#93c5fd"/>
+        <rect x="17" y="17" width="7" height="2" rx="1" fill="#93c5fd"/>
+        <rect x="12" y="28" width="10" height="2" rx="1" fill="#3b82d4"/>
+        <rect x="15" y="27" width="4" height="2" rx="0" fill="#3b82d4"/>
+      </svg>
+    </div>
+    <div class="header-text">
+      <h1>Dashboard KPI E-Learning POLYCC</h1>
+      <p>Pemantauan Sasaran Kerja Tahunan (SKT) 2026 &nbsp;|&nbsp; Bahagian Inovasi &amp; Pembangunan Digital (BIPD) JPPKK</p>
+    </div>
+    <div class="header-badges">
+      <span class="badge">SKT 2026</span>
+      <span class="badge">KPI 14 PERSIST</span>
+      <span class="badge">BIPD JPPKK</span>
+    </div>
+  </div>
+  <div class="nav-bar">
+    <div class="nav-inner">
+      <div class="nav-tab active" onclick="switchTab('overview',this)">📊 Ringkasan KPI</div>
+      <div class="nav-tab" onclick="switchTab('item1',this)">📘 Item 1 — eBook</div>
+      <div class="nav-tab" onclick="switchTab('item2',this)">🎬 Item 2 — Video PdP</div>
+      <div class="nav-tab" onclick="switchTab('item3',this)">🎓 Item 3 — Micro-Credential</div>
+      <div class="nav-tab" onclick="switchTab('item4',this)">🤖 Item 4 — Video AI</div>
+      <div class="nav-tab" onclick="switchTab('policy',this)">📋 Polisi &amp; Rujukan</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     MAIN
+═══════════════════════════════════════ -->
+<div class="main">
+
+<!-- ╔══════════════════════════════════╗
+     ║  TAB: OVERVIEW                  ║
+     ╚══════════════════════════════════╝ -->
+<div id="tab-overview" class="tab-panel active">
+
+  <!-- STAT CARDS -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-icon" style="background:#eff6ff;">📚</div>
+      <div>
+        <div class="stat-num" style="color:#3b82d4;">4</div>
+        <div class="stat-label">Jumlah Item KPI<br>E-Learning SKT 2026</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon" style="background:#f0fdf4;">🏛️</div>
+      <div>
+        <div class="stat-num" style="color:#22c55e;">7</div>
+        <div class="stat-label">Jabatan Terlibat<br>Seluruh POLYCC</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon" style="background:#fffbeb;">🎯</div>
+      <div>
+        <div class="stat-num" style="color:#f59e0b;">9</div>
+        <div class="stat-label">Sasaran Item<br>KPI 14 PERSIST POLYCC</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon" style="background:#f5f3ff;">📅</div>
+      <div>
+        <div class="stat-num" style="color:#7c5cd8;">2026</div>
+        <div class="stat-label">Tahun Pelaksanaan<br>SKT Setiap Semester</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- KPI CARDS -->
+  <div class="section-title">Senarai Item KPI E-Learning</div>
+  <div class="kpi-grid">
+
+    <!-- ── ITEM 1 ── -->
+    <div class="kpi-card">
+      <div class="kpi-card-header">
+        <span class="kpi-item-badge" style="background:#eff6ff;border-color:#3b82d4;color:#1d4ed8;">ITEM 1</span>
+        <div class="kpi-title-block">
+          <h3>📘 eBook Interaktif / eBook AR</h3>
+          <div class="kpi-type-tag">KPI 14 PERSIST POLYCC &nbsp;|&nbsp; Urusetia: JPH</div>
+        </div>
+      </div>
+      <div class="kpi-progress">
+        <div class="progress-header">
+          <span>Kemajuan Pelaksanaan</span>
+          <strong>4 Jabatan</strong>
+        </div>
+        <div class="progress-bg">
+          <div class="progress-fill" style="width:55%;background:linear-gradient(90deg,#3b82d4,#60a5fa);"></div>
+        </div>
+      </div>
+      <div class="kpi-desc">
+        Pembangunan eBook Interaktif atau eBook Augmented Reality (AR) sebagai bahan pengajaran dan pembelajaran digital yang diterbitkan di platform Shoutstore BIPD JPPKK. Sasaran keseluruhan: 9 item.
+      </div>
+      <div class="kpi-depts">
+        <div class="kpi-depts-label">Jabatan Terlibat (4 Jabatan)</div>
+        <div class="dept-list">
+          <span class="dept-chip" style="background:#eff6ff;border-color:#3b82d4;color:#1d4ed8;"><span class="dept-dot" style="background:#3b82d4;"></span>JPH</span>
+          <span class="dept-chip" style="background:#f0fdf4;border-color:#22c55e;color:#15803d;"><span class="dept-dot" style="background:#22c55e;"></span>JP</span>
+          <span class="dept-chip" style="background:#fffbeb;border-color:#f59e0b;color:#b45309;"><span class="dept-dot" style="background:#f59e0b;"></span>JPA</span>
+          <span class="dept-chip" style="background:#f5f3ff;border-color:#7c5cd8;color:#5b21b6;"><span class="dept-dot" style="background:#7c5cd8;"></span>JMSK</span>
+        </div>
+      </div>
+      <div class="kpi-links">
+        <div class="kpi-links-label">Pautan Berkaitan</div>
+        <div class="links-row">
+          <a href="https://shoutstore.bipd.jppkk.edu.my" target="_blank" class="link-btn shoutstore">🔗 Shoutstore BIPD</a>
+          <a href="https://polycc.edu.my" target="_blank" class="link-btn polycc">🏛 Portal POLYCC</a>
+          <a href="#" class="link-btn policy">📄 Panduan eBook AR</a>
+          <a href="#" class="link-btn cidog">📊 CIDOG / BLX</a>
+        </div>
+      </div>
+      <div class="kpi-pic">
+        <div class="pic-info">
+          <div class="pic-avatar" style="background:#3b82d4;">JPH</div>
+          <div>
+            <div class="pic-name">Urusetia KPI — JPH</div>
+            <div class="pic-dept">Jabatan Pelancongan dan Hospitaliti</div>
+          </div>
+        </div>
+        <span class="unit-tag">JK Penerbitan PSIG</span>
+      </div>
+    </div>
+
+    <!-- ── ITEM 2 ── -->
+    <div class="kpi-card">
+      <div class="kpi-card-header">
+        <span class="kpi-item-badge" style="background:#f0fdf4;border-color:#22c55e;color:#15803d;">ITEM 2</span>
+        <div class="kpi-title-block">
+          <h3>🎬 Video PdP (Dokumentari / VR / Video 360°)</h3>
+          <div class="kpi-type-tag">KPI 14 PERSIST POLYCC &nbsp;|&nbsp; Urusetia: JKE</div>
+        </div>
+      </div>
+      <div class="kpi-progress">
+        <div class="progress-header">
+          <span>Kemajuan Pelaksanaan</span>
+          <strong>2 Jabatan</strong>
+        </div>
+        <div class="progress-bg">
+          <div class="progress-fill" style="width:40%;background:linear-gradient(90deg,#22c55e,#86efac);"></div>
+        </div>
+      </div>
+      <div class="kpi-desc">
+        Pembangunan Video Pengajaran dan Pembelajaran (PdP) dalam format Dokumentari, Virtual Reality (VR) atau Video 360° menggunakan teknologi rakaman terkini bagi meningkatkan pengalaman pembelajaran pelajar.
+      </div>
+      <div class="kpi-depts">
+        <div class="kpi-depts-label">Jabatan Terlibat (2 Jabatan)</div>
+        <div class="dept-list">
+          <span class="dept-chip" style="background:#f0fdf4;border-color:#22c55e;color:#15803d;"><span class="dept-dot" style="background:#22c55e;"></span>JKE — Kejuruteraan Elektrik</span>
+          <span class="dept-chip" style="background:#fce7f3;border-color:#ec4899;color:#be185d;"><span class="dept-dot" style="background:#ec4899;"></span>JKA — Kejuruteraan Awam</span>
+        </div>
+      </div>
+      <div class="kpi-links">
+        <div class="kpi-links-label">Pautan Berkaitan</div>
+        <div class="links-row">
+          <a href="https://shoutstore.bipd.jppkk.edu.my" target="_blank" class="link-btn shoutstore">🔗 Shoutstore BIPD</a>
+          <a href="https://polycc.edu.my" target="_blank" class="link-btn polycc">🏛 Portal POLYCC</a>
+          <a href="#" class="link-btn policy">📄 Panduan Video PdP</a>
+          <a href="#" class="link-btn cidog">🎬 UIDM / LMS</a>
+        </div>
+      </div>
+      <div class="kpi-pic">
+        <div class="pic-info">
+          <div class="pic-avatar" style="background:#22c55e;">JKE</div>
+          <div>
+            <div class="pic-name">Urusetia KPI — JKE</div>
+            <div class="pic-dept">Jabatan Kejuruteraan Elektrik</div>
+          </div>
+        </div>
+        <span class="unit-tag">UIDM, ICT</span>
+      </div>
+    </div>
+
+    <!-- ── ITEM 3 ── -->
+    <div class="kpi-card">
+      <div class="kpi-card-header">
+        <span class="kpi-item-badge" style="background:#fffbeb;border-color:#f59e0b;color:#b45309;">ITEM 3</span>
+        <div class="kpi-title-block">
+          <h3>🎓 Micro-Credential (MC) 2026 Mandiri (Lengkap)</h3>
+          <div class="kpi-type-tag">KPI 14 PERSIST POLYCC &nbsp;|&nbsp; Urusetia: JPA</div>
+        </div>
+      </div>
+      <div class="kpi-progress">
+        <div class="progress-header">
+          <span>Kemajuan Pelaksanaan</span>
+          <strong>1 Jabatan</strong>
+        </div>
+        <div class="progress-bg">
+          <div class="progress-fill" style="width:30%;background:linear-gradient(90deg,#f59e0b,#fcd34d);"></div>
+        </div>
+      </div>
+      <div class="kpi-desc">
+        Pembangunan program Micro-Credential (MC) 2026 secara mandiri dan lengkap. Peserta akan memperoleh sijil kemahiran mikro yang diiktiraf dengan kandungan relevan memenuhi keperluan industri.
+      </div>
+      <div class="kpi-depts">
+        <div class="kpi-depts-label">Jabatan Terlibat (1 Jabatan)</div>
+        <div class="dept-list">
+          <span class="dept-chip" style="background:#fce7f3;border-color:#ec4899;color:#be185d;"><span class="dept-dot" style="background:#ec4899;"></span>JKA — Kejuruteraan Awam (DAS, DSB, DKA)</span>
+        </div>
+      </div>
+      <div class="kpi-links">
+        <div class="kpi-links-label">Pautan Berkaitan</div>
+        <div class="links-row">
+          <a href="https://shoutstore.bipd.jppkk.edu.my" target="_blank" class="link-btn shoutstore">🔗 Shoutstore BIPD</a>
+          <a href="#" class="link-btn polycc">🏛 Portal UIDM</a>
+          <a href="#" class="link-btn policy">📄 Daftar / Enrolmen</a>
+          <a href="#" class="link-btn cidog">🎓 MQA / Akreditasi</a>
+        </div>
+      </div>
+      <div class="kpi-pic">
+        <div class="pic-info">
+          <div class="pic-avatar" style="background:#f59e0b;">JPA</div>
+          <div>
+            <div class="pic-name">Urusetia KPI — JPA</div>
+            <div class="pic-dept">Jabatan Pengajian Am</div>
+          </div>
+        </div>
+        <span class="unit-tag">UIDM, ICT</span>
+      </div>
+    </div>
+
+    <!-- ── ITEM 4 ── -->
+    <div class="kpi-card">
+      <div class="kpi-card-header">
+        <span class="kpi-item-badge" style="background:#f5f3ff;border-color:#7c5cd8;color:#5b21b6;">ITEM 4</span>
+        <div class="kpi-title-block">
+          <h3>🤖 Video PdP Berkecerdasan Buatan (AI)</h3>
+          <div class="kpi-type-tag">SKT BIPD — KPI 26 PS18 &nbsp;|&nbsp; Urusetia: JTMK</div>
+        </div>
+      </div>
+      <div class="kpi-progress">
+        <div class="progress-header">
+          <span>Kemajuan Pelaksanaan (Sasaran 60% BLX)</span>
+          <strong>2 Jabatan</strong>
+        </div>
+        <div class="progress-bg">
+          <div class="progress-fill" style="width:35%;background:linear-gradient(90deg,#7c5cd8,#a78bfa);"></div>
+        </div>
+      </div>
+      <div class="kpi-desc">
+        Pembangunan Video PdP menggunakan teknologi Kecerdasan Buatan (AI) — text-to-video, AI avatar, suara AI dan teknologi generatif. Sasaran: 60% Blended Learning Index (BLX) bagi SKT BIPD.
+      </div>
+      <div class="kpi-depts">
+        <div class="kpi-depts-label">Jabatan Terlibat (2 Jabatan)</div>
+        <div class="dept-list">
+          <span class="dept-chip" style="background:#f5f3ff;border-color:#7c5cd8;color:#5b21b6;"><span class="dept-dot" style="background:#7c5cd8;"></span>JTMK — TMK (DIT/DDT)</span>
+          <span class="dept-chip" style="background:#eff6ff;border-color:#3b82d4;color:#1d4ed8;"><span class="dept-dot" style="background:#3b82d4;"></span>JPH — Pelancongan &amp; Hospitaliti</span>
+        </div>
+      </div>
+      <div class="kpi-links">
+        <div class="kpi-links-label">Pautan Berkaitan</div>
+        <div class="links-row">
+          <a href="https://shoutstore.bipd.jppkk.edu.my" target="_blank" class="link-btn shoutstore">🔗 Shoutstore BIPD</a>
+          <a href="#" class="link-btn polycc">🤖 AI Tools JTMK</a>
+          <a href="#" class="link-btn policy">📄 Panduan Video AI</a>
+          <a href="#" class="link-btn cidog">📊 CIDOG BLX Index</a>
+        </div>
+      </div>
+      <div class="kpi-pic">
+        <div class="pic-info">
+          <div class="pic-avatar" style="background:#7c5cd8;">JTMK</div>
+          <div>
+            <div class="pic-name">Urusetia KPI — JTMK</div>
+            <div class="pic-dept">Jabatan Teknologi Maklumat &amp; Komunikasi</div>
+          </div>
+        </div>
+        <span class="unit-tag">UIDM, ICT</span>
+      </div>
+    </div>
+
+  </div><!-- /kpi-grid -->
+
+  <!-- ══ CHARTS SECTION ══ -->
+  <div class="section-title">Analisis &amp; Visualisasi Data KPI</div>
+  <div class="charts-section">
+
+    <!-- Row 1: 3 charts -->
+    <div class="charts-row">
+
+      <!-- Chart 1: Donut — Jabatan per Item -->
+      <div class="chart-card">
+        <div class="chart-title">Bilangan Jabatan per Item KPI</div>
+        <div class="chart-subtitle">Taburan penglibatan jabatan mengikut item</div>
+        <div class="chart-canvas-wrap">
+          <canvas id="chartDonut" width="200" height="200"></canvas>
+        </div>
+        <div class="chart-legend">
+          <span class="legend-item"><span class="legend-dot" style="background:#3b82d4;"></span>Item 1 — eBook (4)</span>
+          <span class="legend-item"><span class="legend-dot" style="background:#22c55e;"></span>Item 2 — Video (2)</span>
+          <span class="legend-item"><span class="legend-dot" style="background:#f59e0b;"></span>Item 3 — MC (1)</span>
+          <span class="legend-item"><span class="legend-dot" style="background:#7c5cd8;"></span>Item 4 — AI (2)</span>
+        </div>
+      </div>
+
+      <!-- Chart 2: Pie — Item type breakdown -->
+      <div class="chart-card">
+        <div class="chart-title">Pecahan Jenis Item KPI</div>
+        <div class="chart-subtitle">KPI 14 PERSIST vs SKT BIPD KPI 26</div>
+        <div class="chart-canvas-wrap">
+          <canvas id="chartPie" width="200" height="200"></canvas>
+        </div>
+        <div class="chart-legend">
+          <span class="legend-item"><span class="legend-dot" style="background:#3b82d4;"></span>KPI 14 PERSIST POLYCC (3 item)</span>
+          <span class="legend-item"><span class="legend-dot" style="background:#7c5cd8;"></span>SKT BIPD / KPI 26 PS18 (1 item)</span>
+        </div>
+      </div>
+
+      <!-- Chart 3: Radar — Liputan KPI per Jabatan -->
+      <div class="chart-card">
+        <div class="chart-title">Liputan KPI per Jabatan</div>
+        <div class="chart-subtitle">Jumlah item KPI yang diwajibkan per jabatan</div>
+        <div class="chart-canvas-wrap">
+          <canvas id="chartRadar" width="200" height="200"></canvas>
+        </div>
+        <div class="chart-legend">
+          <span class="legend-item"><span class="legend-rect" style="background:#3b82d480;border:1px solid #3b82d4;"></span>Bilangan Item KPI</span>
+        </div>
+      </div>
+
+    </div><!-- /charts-row -->
+
+    <!-- Row 2: 2 charts -->
+    <div class="charts-row-2">
+
+      <!-- Chart 4: Horizontal Bar — Sasaran vs Kemajuan -->
+      <div class="chart-card">
+        <div class="chart-title">Sasaran vs Anggaran Kemajuan per Item</div>
+        <div class="chart-subtitle">Perbandingan sasaran (100%) dengan anggaran kemajuan semasa</div>
+        <div class="chart-canvas-wrap">
+          <canvas id="chartHBar" width="520" height="200"></canvas>
+        </div>
+        <div class="chart-legend">
+          <span class="legend-item"><span class="legend-rect" style="background:#e5e7eb;"></span>Sasaran (100%)</span>
+          <span class="legend-item"><span class="legend-rect" style="background:#3b82d4;"></span>Kemajuan Semasa</span>
+        </div>
+      </div>
+
+      <!-- Chart 5: Stacked Bar — Item per Jabatan -->
+      <div class="chart-card">
+        <div class="chart-title">Agihan Item KPI per Jabatan</div>
+        <div class="chart-subtitle">Setiap jabatan dan item KPI yang diwajibkan</div>
+        <div class="chart-canvas-wrap">
+          <canvas id="chartStack" width="520" height="200"></canvas>
+        </div>
+        <div class="chart-legend">
+          <span class="legend-item"><span class="legend-rect" style="background:#3b82d4;"></span>Item 1 eBook</span>
+          <span class="legend-item"><span class="legend-rect" style="background:#22c55e;"></span>Item 2 Video</span>
+          <span class="legend-item"><span class="legend-rect" style="background:#f59e0b;"></span>Item 3 MC</span>
+          <span class="legend-item"><span class="legend-rect" style="background:#7c5cd8;"></span>Item 4 AI</span>
+        </div>
+      </div>
+
+    </div><!-- /charts-row-2 -->
+  </div><!-- /charts-section -->
+
+  <!-- OVERVIEW TABLE -->
+  <div class="section-title">Jadual Rumusan KPI Per Jabatan</div>
+  <div class="table-wrap">
+    <div class="table-header">📋 Penetapan Item SKT 2026 — Semua Jabatan</div>
+    <div style="overflow-x:auto;">
+      <table>
+        <thead>
+          <tr>
+            <th>Item KPI</th>
+            <th>Jenis KPI</th>
+            <th>Jabatan Terlibat</th>
+            <th>Unit / Sub</th>
+            <th>Urusetia (PIC)</th>
+            <th>Unit Sokongan</th>
+            <th>Pautan</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Item 1</strong><br><span style="font-size:11px;color:#57606a;">eBook Interaktif / eBook AR</span></td>
+            <td><span style="background:#eff6ff;border:1px solid #3b82d4;color:#1d4ed8;padding:2px 7px;border-radius:4px;font-size:10px;font-weight:700;">KPI 14 PERSIST</span></td>
+            <td><div class="dept-cell">
+              <span class="dept-tag" style="background:#3b82d4;">JPH</span>
+              <span class="dept-tag" style="background:#22c55e;">JP</span>
+              <span class="dept-tag" style="background:#f59e0b;">JPA</span>
+              <span class="dept-tag" style="background:#7c5cd8;">JMSK</span>
+            </div></td>
+            <td style="font-size:11px;">DUP, DHF<br>DIB/DIF, DSK</td>
+            <td><span class="dept-tag" style="background:#3b82d4;">JPH</span></td>
+            <td style="font-size:11px;">JK Penerbitan PSIG</td>
+            <td><a href="https://shoutstore.bipd.jppkk.edu.my" target="_blank" class="link-tiny">🔗 Shoutstore</a><a href="#" class="link-tiny">📄 ITEM 1</a></td>
+          </tr>
+          <tr>
+            <td><strong>Item 2</strong><br><span style="font-size:11px;color:#57606a;">Video PdP / Dokumentari / VR / 360°</span></td>
+            <td><span style="background:#eff6ff;border:1px solid #3b82d4;color:#1d4ed8;padding:2px 7px;border-radius:4px;font-size:10px;font-weight:700;">KPI 14 PERSIST</span></td>
+            <td><div class="dept-cell">
+              <span class="dept-tag" style="background:#22c55e;">JKE</span>
+              <span class="dept-tag" style="background:#ec4899;">JKA</span>
+            </div></td>
+            <td style="font-size:11px;">DEP, DTK<br>DAS, DSB, DKA</td>
+            <td><span class="dept-tag" style="background:#22c55e;">JKE</span></td>
+            <td style="font-size:11px;">UIDM, ICT</td>
+            <td><a href="https://shoutstore.bipd.jppkk.edu.my" target="_blank" class="link-tiny">🔗 Shoutstore</a><a href="#" class="link-tiny">📄 ITEM 2</a></td>
+          </tr>
+          <tr>
+            <td><strong>Item 3</strong><br><span style="font-size:11px;color:#57606a;">Micro-Credentials 2026 Mandiri (Lengkap)</span></td>
+            <td><span style="background:#eff6ff;border:1px solid #3b82d4;color:#1d4ed8;padding:2px 7px;border-radius:4px;font-size:10px;font-weight:700;">KPI 14 PERSIST</span></td>
+            <td><div class="dept-cell">
+              <span class="dept-tag" style="background:#ec4899;">JKA</span>
+            </div></td>
+            <td style="font-size:11px;">DAS, DSB, DKA</td>
+            <td><span class="dept-tag" style="background:#f59e0b;">JPA</span></td>
+            <td style="font-size:11px;">UIDM, ICT</td>
+            <td><a href="https://shoutstore.bipd.jppkk.edu.my" target="_blank" class="link-tiny">🔗 Shoutstore</a><a href="#" class="link-tiny">📄 ITEM 3</a></td>
+          </tr>
+          <tr>
+            <td><strong>Item 4</strong><br><span style="font-size:11px;color:#57606a;">Video PdP Berkecerdasan AI</span></td>
+            <td><span style="background:#f5f3ff;border:1px solid #7c5cd8;color:#5b21b6;padding:2px 7px;border-radius:4px;font-size:10px;font-weight:700;">SKT BIPD / KPI 26</span></td>
+            <td><div class="dept-cell">
+              <span class="dept-tag" style="background:#7c5cd8;">JTMK</span>
+              <span class="dept-tag" style="background:#3b82d4;">JPH</span>
+            </div></td>
+            <td style="font-size:11px;">DIT/DDT<br>DUP, DHF</td>
+            <td><span class="dept-tag" style="background:#7c5cd8;">JTMK</span></td>
+            <td style="font-size:11px;">UIDM, ICT</td>
+            <td><a href="https://shoutstore.bipd.jppkk.edu.my" target="_blank" class="link-tiny">🔗 Shoutstore</a><a href="#" class="link-tiny">📄 ITEM 4</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div><!-- /tab-overview -->
+
+
+<!-- ╔══════════════════════════════════╗
+     ║  TAB: ITEM 1                    ║
+     ╚══════════════════════════════════╝ -->
+<div id="tab-item1" class="tab-panel">
+  <div class="section-title">📘 Item 1 — eBook Interaktif / eBook AR</div>
+  <div class="detail-panel">
+    <div class="detail-grid">
+      <div>
+        <div class="detail-section-label">Perihal Item</div>
+        <p class="detail-desc">eBook Interaktif atau eBook Augmented Reality (AR) ialah bahan e-pembelajaran digital yang menggabungkan teks, media interaktif dan elemen AR untuk meningkatkan pengalaman pembacaan pelajar. Setiap item perlu diterbitkan di platform Shoutstore BIPD JPPKK.</p>
+        <br>
+        <div class="detail-section-label">Spesifikasi Teknikal</div>
+        <div class="spec-row"><span>Format:</span><span>ePub / PDF Interaktif / AR-enabled</span></div>
+        <div class="spec-row"><span>Platform:</span><span>Shoutstore BIPD JPPKK</span></div>
+        <div class="spec-row"><span>Jenis KPI:</span><span>KPI 14 PERSIST POLYCC</span></div>
+        <div class="spec-row"><span>Sasaran Jumlah:</span><span>9 item keseluruhan</span></div>
+        <div class="spec-row"><span>Unit Sokongan:</span><span>JK Penerbitan PSIG</span></div>
+      </div>
+      <div>
+        <div class="detail-section-label">Jabatan Terlibat &amp; Peranan</div>
+        <div class="dept-detail-card">
+          <div class="dept-detail-top"><span class="dept-tag" style="background:#3b82d4;">JPH</span><span class="name">Jabatan Pelancongan dan Hospitaliti</span></div>
+          <div class="dept-detail-sub">Unit: DUP, DHF &nbsp;|&nbsp; <strong>Urusetia KPI (PIC)</strong></div>
+        </div>
+        <div class="dept-detail-card">
+          <div class="dept-detail-top"><span class="dept-tag" style="background:#22c55e;">JP</span><span class="name">Jabatan Perdagangan</span></div>
+          <div class="dept-detail-sub">Unit: DIB/DIF, DSK &nbsp;|&nbsp; Pembangun eBook</div>
+        </div>
+        <div class="dept-detail-card">
+          <div class="dept-detail-top"><span class="dept-tag" style="background:#f59e0b;">JPA</span><span class="name">Jabatan Pengajian Am</span></div>
+          <div class="dept-detail-sub">Unit: Pensyarah Am / Generik &nbsp;|&nbsp; Pembangun eBook</div>
+        </div>
+        <div class="dept-detail-card">
+          <div class="dept-detail-top"><span class="dept-tag" style="background:#7c5cd8;">JMSK</span><span class="name">Jabatan Matematik, Sains dan Komputer</span></div>
+          <div class="dept-detail-sub">Unit: Matematik, Sains, Komputer &nbsp;|&nbsp; Pembangun eBook</div>
+        </div>
+      </div>
+    </div>
+    <div class="detail-links-wrap">
+      <div class="detail-section-label">Semua Pautan Berkaitan — Item 1</div>
+      <div class="links-row">
+        <a href="https://shoutstore.bipd.jppkk.edu.my" target="_blank" class="link-btn shoutstore">🔗 Shoutstore BIPD JPPKK</a>
+        <a href="https://polycc.edu.my" target="_blank" class="link-btn polycc">🏛️ Portal POLYCC</a>
+        <a href="#" class="link-btn policy">📄 Panduan Penerbitan eBook AR</a>
+        <a href="#" class="link-btn cidog">📊 CIDOG / BLX Dashboard</a>
+        <a href="#" class="link-btn contact">📧 Hubungi Urusetia JPH</a>
+        <a href="#" class="link-btn policy">📋 Kamus KPI POLYCC 2026</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ╔══════════════════════════════════╗
+     ║  TAB: ITEM 2                    ║
+     ╚══════════════════════════════════╝ -->
+<div id="tab-item2" class="tab-panel">
+  <div class="section-title">🎬 Item 2 — Video PdP (Dokumentari / VR / Video 360°)</div>
+  <div class="detail-panel">
+    <div class="detail-grid">
+      <div>
+        <div class="detail-section-label">Perihal Item</div>
+        <p class="detail-desc">Video Pengajaran dan Pembelajaran (PdP) dalam format Dokumentari, Virtual Reality (VR) atau Video 360° yang dihasilkan oleh pensyarah untuk mempertingkatkan kualiti penyampaian pembelajaran. Video perlu dimuat naik ke platform yang diluluskan dan didaftarkan di Shoutstore BIPD.</p>
+        <br>
+        <div class="detail-section-label">Spesifikasi Teknikal</div>
+        <div class="spec-row"><span>Format:</span><span>MP4 / 360° Video / VR Format</span></div>
+        <div class="spec-row"><span>Platform:</span><span>YouTube / UIDM LMS / Shoutstore</span></div>
+        <div class="spec-row"><span>Jenis KPI:</span><span>KPI 14 PERSIST POLYCC</span></div>
+        <div class="spec-row"><span>Sasaran Jumlah:</span><span>9 item keseluruhan</span></div>
+        <div class="spec-row"><span>Unit Sokongan:</span><span>UIDM, ICT</span></div>
+      </div>
+      <div>
+        <div class="detail-section-label">Jabatan Terlibat &amp; Peranan</div>
+        <div class="dept-detail-card">
+          <div class="dept-detail-top"><span class="dept-tag" style="background:#22c55e;">JKE</span><span class="name">Jabatan Kejuruteraan Elektrik</span></div>
+          <div class="dept-detail-sub">Unit: DEP, DTK &nbsp;|&nbsp; <strong>Urusetia KPI (PIC)</strong></div>
+        </div>
+        <div class="dept-detail-card">
+          <div class="dept-detail-top"><span class="dept-tag" style="background:#ec4899;">JKA</span><span class="name">Jabatan Kejuruteraan Awam</span></div>
+          <div class="dept-detail-sub">Unit: DAS, DSB, DKA &nbsp;|&nbsp; Pembangun Video PdP</div>
+        </div>
+      </div>
+    </div>
+    <div class="detail-links-wrap">
+      <div class="detail-section-label">Semua Pautan Berkaitan — Item 2</div>
+      <div class="links-row">
+        <a href="https://shoutstore.bipd.jppkk.edu.my" target="_blank" class="link-btn shoutstore">🔗 Shoutstore BIPD JPPKK</a>
+        <a href="https://polycc.edu.my" target="_blank" class="link-btn polycc">🏛️ Portal POLYCC</a>
+        <a href="#" class="link-btn policy">📄 Garis Panduan Video PdP</a>
+        <a href="#" class="link-btn cidog">🎬 UIDM / LMS Video Platform</a>
+        <a href="#" class="link-btn contact">📧 Hubungi Urusetia JKE</a>
+        <a href="#" class="link-btn policy">📋 Kamus KPI POLYCC 2026</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ╔══════════════════════════════════╗
+     ║  TAB: ITEM 3                    ║
+     ╚══════════════════════════════════╝ -->
+<div id="tab-item3" class="tab-panel">
+  <div class="section-title">🎓 Item 3 — Micro-Credential (MC) 2026 Mandiri (Lengkap)</div>
+  <div class="detail-panel">
+    <div class="detail-grid">
+      <div>
+        <div class="detail-section-label">Perihal Item</div>
+        <p class="detail-desc">Micro-Credential (MC) ialah program pembelajaran jangka pendek yang terstruktur, bertujuan membolehkan peserta memperoleh kemahiran atau pengetahuan khusus yang disahkan oleh sijil. Program ini mesti dibangunkan secara mandiri dan lengkap sebelum penghujung tahun 2026.</p>
+        <br>
+        <div class="detail-section-label">Spesifikasi Teknikal</div>
+        <div class="spec-row"><span>Jenis Program:</span><span>Micro-Credential Mandiri / Bebas</span></div>
+        <div class="spec-row"><span>Platform:</span><span>UIDM POLYCC / Shoutstore</span></div>
+        <div class="spec-row"><span>Jenis KPI:</span><span>KPI 14 PERSIST POLYCC</span></div>
+        <div class="spec-row"><span>Status Wajib:</span><span>Lengkap (Mandiri) — bukan berperingkat</span></div>
+        <div class="spec-row"><span>Unit Sokongan:</span><span>UIDM, ICT</span></div>
+      </div>
+      <div>
+        <div class="detail-section-label">Jabatan Terlibat &amp; Peranan</div>
+        <div class="dept-detail-card">
+          <div class="dept-detail-top"><span class="dept-tag" style="background:#ec4899;">JKA</span><span class="name">Jabatan Kejuruteraan Awam</span></div>
+          <div class="dept-detail-sub">Unit: DAS, DSB, DKA &nbsp;|&nbsp; <strong>Peneraju Utama MC</strong></div>
+        </div>
+        <div class="note-box" style="background:#fffbeb;border:1px solid #f59e0b;">
+          <div class="note-box-title" style="color:#b45309;">⚠️ Nota Penting</div>
+          <div class="note-box-text" style="color:#92400e;">MC mesti diserahkan dalam keadaan LENGKAP (Mandiri) — bukan modul berperingkat. Pastikan semua kandungan, penilaian dan sijil telah disediakan sebelum penyerahan kepada UIDM.</div>
+        </div>
+      </div>
+    </div>
+    <div class="detail-links-wrap">
+      <div class="detail-section-label">Semua Pautan Berkaitan — Item 3</div>
+      <div class="links-row">
+        <a href="https://shoutstore.bipd.jppkk.edu.my" target="_blank" class="link-btn shoutstore">🔗 Shoutstore BIPD JPPKK</a>
+        <a href="#" class="link-btn polycc">🏛️ Portal UIDM POLYCC</a>
+        <a href="#" class="link-btn policy">📄 Pendaftaran / Enrolmen MC</a>
+        <a href="#" class="link-btn cidog">🎓 MQA / Akreditasi</a>
+        <a href="#" class="link-btn contact">📧 Hubungi Urusetia JPA</a>
+        <a href="#" class="link-btn policy">📋 Kamus KPI POLYCC 2026</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ╔══════════════════════════════════╗
+     ║  TAB: ITEM 4                    ║
+     ╚══════════════════════════════════╝ -->
+<div id="tab-item4" class="tab-panel">
+  <div class="section-title">🤖 Item 4 — Video PdP Berkecerdasan Buatan (AI)</div>
+  <div class="detail-panel">
+    <div class="detail-grid">
+      <div>
+        <div class="detail-section-label">Perihal Item</div>
+        <p class="detail-desc">Video PdP Berkecerdasan Buatan (AI) ialah bahan e-pembelajaran yang dihasilkan atau dipertingkatkan menggunakan teknologi AI generatif seperti text-to-video, AI avatar, suntingan automatik AI dan pemprosesan bahasa semula jadi. Sasaran: 60% BLX bagi SKT BIPD KPI 26 PS18.</p>
+        <br>
+        <div class="detail-section-label">Spesifikasi Teknikal</div>
+        <div class="spec-row"><span>Jenis KPI:</span><span>SKT BIPD — KPI 26 PS18</span></div>
+        <div class="spec-row"><span>Sasaran:</span><span>60% Blended Learning Index (BLX)</span></div>
+        <div class="spec-row"><span>Platform:</span><span>Shoutstore / UIDM LMS</span></div>
+        <div class="spec-row"><span>Unit Sokongan:</span><span>UIDM, ICT</span></div>
+        <br>
+        <div class="detail-section-label">Alat AI Yang Boleh Digunakan</div>
+        <div class="ai-tools">
+          <span class="ai-chip">HeyGen</span>
+          <span class="ai-chip">Pictory AI</span>
+          <span class="ai-chip">Sora</span>
+          <span class="ai-chip">Runway ML</span>
+          <span class="ai-chip">D-ID</span>
+          <span class="ai-chip">ElevenLabs</span>
+          <span class="ai-chip">Synthesia</span>
+          <span class="ai-chip">InVideo AI</span>
+        </div>
+      </div>
+      <div>
+        <div class="detail-section-label">Jabatan Terlibat &amp; Peranan</div>
+        <div class="dept-detail-card">
+          <div class="dept-detail-top"><span class="dept-tag" style="background:#7c5cd8;">JTMK</span><span class="name">Jabatan Teknologi Maklumat &amp; Komunikasi</span></div>
+          <div class="dept-detail-sub">Unit: DIT/DDT &nbsp;|&nbsp; <strong>Urusetia KPI (PIC) &amp; Peneraju Teknikal</strong></div>
+        </div>
+        <div class="dept-detail-card">
+          <div class="dept-detail-top"><span class="dept-tag" style="background:#3b82d4;">JPH</span><span class="name">Jabatan Pelancongan dan Hospitaliti</span></div>
+          <div class="dept-detail-sub">Unit: DUP, DHF &nbsp;|&nbsp; Turut Menyumbang Video AI</div>
+        </div>
+        <div class="note-box" style="background:#f5f3ff;border:1px solid #7c5cd8;">
+          <div class="note-box-title" style="color:#5b21b6;">💡 Keperluan Penyerahan</div>
+          <div class="note-box-text" style="color:#4c1d95;">Video perlu mempunyai bukti penggunaan alat AI (tangkapan skrin / metadata). Pastikan kandungan bebas plagiarisme dan mematuhi dasar AI institusi sebelum dimuat naik.</div>
+        </div>
+      </div>
+    </div>
+    <div class="detail-links-wrap">
+      <div class="detail-section-label">Semua Pautan Berkaitan — Item 4</div>
+      <div class="links-row">
+        <a href="https://shoutstore.bipd.jppkk.edu.my" target="_blank" class="link-btn shoutstore">🔗 Shoutstore BIPD JPPKK</a>
+        <a href="#" class="link-btn polycc">🤖 Portal AI Tools JTMK</a>
+        <a href="#" class="link-btn policy">📄 Garis Panduan Video AI</a>
+        <a href="#" class="link-btn cidog">📊 CIDOG BLX Index</a>
+        <a href="#" class="link-btn contact">📧 Hubungi Urusetia JTMK</a>
+        <a href="#" class="link-btn policy">📋 Dasar AI POLYCC</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ╔══════════════════════════════════╗
+     ║  TAB: POLICY                    ║
+     ╚══════════════════════════════════╝ -->
+<div id="tab-policy" class="tab-panel">
+  <div class="section-title">📋 Polisi, Dokumen Rujukan &amp; Pautan Penting</div>
+
+  <div class="policy-section">
+    <div class="policy-header">🗂️ Dokumen Rasmi SKT 2026</div>
+    <div class="policy-grid">
+      <div class="policy-item">
+        <div class="policy-label">Kamus KPI</div>
+        <div class="policy-val"><a href="#">KAMUS_V1 — Kamus KPI POLYCC 2026 ↗</a></div>
+      </div>
+      <div class="policy-item">
+        <div class="policy-label">Punca Kuasa (BIPD)</div>
+        <div class="policy-val"><a href="#">Surat Pemakluman SKT 2026 ↗</a></div>
+      </div>
+      <div class="policy-item">
+        <div class="policy-label">Penetapan SKT (TPA PS18)</div>
+        <div class="policy-val"><a href="#">Memo Perlaksanaan SKT 2026 ↗</a></div>
+      </div>
+      <div class="policy-item">
+        <div class="policy-label">Perlantikan Pelaksana (Pengarah PS18)</div>
+        <div class="policy-val"><a href="#">PS0.600-2.25 Jld_3 ↗</a></div>
+      </div>
+      <div class="policy-item">
+        <div class="policy-label">Platform Penerbitan</div>
+        <div class="policy-val"><a href="https://shoutstore.bipd.jppkk.edu.my" target="_blank">Shoutstore BIPD JPPKK ↗</a></div>
+      </div>
+      <div class="policy-item">
+        <div class="policy-label">Platform LMS / UIDM</div>
+        <div class="policy-val"><a href="https://polycc.edu.my" target="_blank">Portal UIDM / POLYCC ↗</a></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title">🏛️ Senarai Lengkap Jabatan &amp; Maklumat Hubungan</div>
+  <div class="table-wrap">
+    <div style="overflow-x:auto;">
+      <table>
+        <thead>
+          <tr>
+            <th>Kod</th>
+            <th>Nama Jabatan (Penuh)</th>
+            <th>Unit / Sub-jabatan</th>
+            <th>Item KPI</th>
+            <th>Peranan</th>
+            <th>Hubungi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="dept-tag" style="background:#3b82d4;">JPH</span></td>
+            <td><strong>Jabatan Pelancongan dan Hospitaliti</strong></td>
+            <td>DUP, DHF</td>
+            <td>Item 1, Item 4</td>
+            <td>Urusetia KPI Item 1 &amp; Penyumbang Item 4</td>
+            <td><a href="#" class="link-tiny">📧 Email</a></td>
+          </tr>
+          <tr>
+            <td><span class="dept-tag" style="background:#22c55e;">JP</span></td>
+            <td><strong>Jabatan Perdagangan</strong></td>
+            <td>DIB/DIF, DSK</td>
+            <td>Item 1</td>
+            <td>Pembangun eBook</td>
+            <td><a href="#" class="link-tiny">📧 Email</a></td>
+          </tr>
+          <tr>
+            <td><span class="dept-tag" style="background:#f59e0b;">JPA</span></td>
+            <td><strong>Jabatan Pengajian Am</strong></td>
+            <td>Am / Generik</td>
+            <td>Item 1, Item 3 (Urusetia)</td>
+            <td>Pembangun eBook &amp; Urusetia MC</td>
+            <td><a href="#" class="link-tiny">📧 Email</a></td>
+          </tr>
+          <tr>
+            <td><span class="dept-tag" style="background:#7c5cd8;">JMSK</span></td>
+            <td><strong>Jabatan Matematik, Sains dan Komputer</strong></td>
+            <td>Matematik, Sains, Komputer</td>
+            <td>Item 1</td>
+            <td>Pembangun eBook</td>
+            <td><a href="#" class="link-tiny">📧 Email</a></td>
+          </tr>
+          <tr>
+            <td><span class="dept-tag" style="background:#22c55e;">JKE</span></td>
+            <td><strong>Jabatan Kejuruteraan Elektrik</strong></td>
+            <td>DEP, DTK</td>
+            <td>Item 2</td>
+            <td>Urusetia KPI Item 2 &amp; Pembangun Video PdP</td>
+            <td><a href="#" class="link-tiny">📧 Email</a></td>
+          </tr>
+          <tr>
+            <td><span class="dept-tag" style="background:#ec4899;">JKA</span></td>
+            <td><strong>Jabatan Kejuruteraan Awam</strong></td>
+            <td>DAS, DSB, DKA</td>
+            <td>Item 2, Item 3</td>
+            <td>Pembangun Video PdP &amp; Pembangun MC</td>
+            <td><a href="#" class="link-tiny">📧 Email</a></td>
+          </tr>
+          <tr>
+            <td><span class="dept-tag" style="background:#7c5cd8;">JTMK</span></td>
+            <td><strong>Jabatan Teknologi Maklumat dan Komunikasi</strong></td>
+            <td>DIT, DDT</td>
+            <td>Item 4</td>
+            <td>Urusetia KPI Item 4 &amp; Peneraju Video AI</td>
+            <td><a href="#" class="link-tiny">📧 Email</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+</div><!-- /main -->
+
+<div class="page-footer">
+  Dashboard KPI E-Learning POLYCC &nbsp;|&nbsp; SKT 2026 &nbsp;|&nbsp; BIPD JPPKK &nbsp;&bull;&nbsp; Made with IBM Bob
+</div>
+
+<script>
+  function switchTab(id, el) {
+    document.querySelectorAll('.tab-panel').forEach(function(p){ p.classList.remove('active'); });
+    document.querySelectorAll('.nav-tab').forEach(function(t){ t.classList.remove('active'); });
+    document.getElementById('tab-' + id).classList.add('active');
+    el.classList.add('active');
+  }
+
+  /* ══════════════════════════════════════════════
+     CHART DRAWING — pure Canvas 2D, zero deps
+  ══════════════════════════════════════════════ */
+  var COLORS = {
+    blue:   '#3b82d4', green:  '#22c55e', amber:  '#f59e0b',
+    purple: '#7c5cd8', pink:   '#ec4899', gray:   '#e5e7eb',
+    text:   '#1f2328', muted:  '#8b949e'
+  };
+
+  function roundRect(ctx,x,y,w,h,r){
+    r=Math.min(r,w/2,h/2);
+    ctx.beginPath();
+    ctx.moveTo(x+r,y); ctx.lineTo(x+w-r,y); ctx.arcTo(x+w,y,x+w,y+r,r);
+    ctx.lineTo(x+w,y+h-r); ctx.arcTo(x+w,y+h,x+w-r,y+h,r);
+    ctx.lineTo(x+r,y+h); ctx.arcTo(x,y+h,x,y+h-r,r);
+    ctx.lineTo(x,y+r); ctx.arcTo(x,y,x+r,y,r);
+    ctx.closePath();
+  }
+  function sf(ctx,size,weight){
+    ctx.font=(weight||'normal')+' '+size+'px -apple-system,"Segoe UI",system-ui,sans-serif';
+  }
+
+  /* ── CHART 1: Donut — jabatan per item ── */
+  (function(){
+    var c=document.getElementById('chartDonut'); if(!c)return;
+    var ctx=c.getContext('2d'), cx=100, cy=100, ro=78, ri=48;
+    var data=[{v:4,col:COLORS.blue},{v:2,col:COLORS.green},{v:1,col:COLORS.amber},{v:2,col:COLORS.purple}];
+    var total=data.reduce(function(s,d){return s+d.v;},0);
+    var ang=-Math.PI/2, gap=0.05;
+    data.forEach(function(d){
+      var sw=(d.v/total)*2*Math.PI-gap;
+      ctx.beginPath();
+      ctx.arc(cx,cy,ro,ang+gap/2,ang+sw+gap/2);
+      ctx.arc(cx,cy,ri,ang+sw+gap/2,ang+gap/2,true);
+      ctx.closePath(); ctx.fillStyle=d.col; ctx.fill();
+      ang+=sw+gap;
+    });
+    sf(ctx,24,'700'); ctx.fillStyle=COLORS.text; ctx.textAlign='center'; ctx.textBaseline='middle';
+    ctx.fillText(total,cx,cy-9);
+    sf(ctx,10); ctx.fillStyle=COLORS.muted; ctx.fillText('Jabatan',cx,cy+10);
+  })();
+
+  /* ── CHART 2: Pie — jenis KPI ── */
+  (function(){
+    var c=document.getElementById('chartPie'); if(!c)return;
+    var ctx=c.getContext('2d'), cx=100, cy=100, r=80;
+    var data=[{v:3,col:COLORS.blue,lbl:'75%'},{v:1,col:COLORS.purple,lbl:'25%'}];
+    var total=4, ang=-Math.PI/2, gap=0.06;
+    data.forEach(function(d){
+      var sw=(d.v/total)*2*Math.PI-gap;
+      ctx.beginPath(); ctx.moveTo(cx,cy);
+      ctx.arc(cx,cy,r,ang+gap/2,ang+sw+gap/2); ctx.closePath();
+      ctx.fillStyle=d.col; ctx.fill();
+      var mid=ang+gap/2+sw/2;
+      sf(ctx,13,'700'); ctx.fillStyle='#fff'; ctx.textAlign='center'; ctx.textBaseline='middle';
+      ctx.fillText(d.lbl, cx+r*0.6*Math.cos(mid), cy+r*0.6*Math.sin(mid));
+      ang+=sw+gap;
+    });
+  })();
+
+  /* ── CHART 3: Radar — liputan KPI per jabatan ── */
+  (function(){
+    var c=document.getElementById('chartRadar'); if(!c)return;
+    var ctx=c.getContext('2d'), cx=100, cy=106, r=66;
+    var axes=[
+      {lbl:'JPH',v:2},{lbl:'JP',v:1},{lbl:'JPA',v:1},
+      {lbl:'JMSK',v:1},{lbl:'JKE',v:1},{lbl:'JKA',v:2},{lbl:'JTMK',v:1}
+    ];
+    var n=axes.length, max=2;
+    function pt(i,f){ var a=(2*Math.PI*i/n)-Math.PI/2; return {x:cx+r*f*Math.cos(a),y:cy+r*f*Math.sin(a)}; }
+    /* grid */
+    [0.33,0.67,1].forEach(function(f){
+      ctx.beginPath();
+      for(var i=0;i<n;i++){ var p=pt(i,f); i===0?ctx.moveTo(p.x,p.y):ctx.lineTo(p.x,p.y); }
+      ctx.closePath(); ctx.strokeStyle='#e5e7eb'; ctx.lineWidth=1; ctx.stroke();
+    });
+    /* spokes */
+    for(var i=0;i<n;i++){
+      var p=pt(i,1); ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(p.x,p.y);
+      ctx.strokeStyle='#e5e7eb'; ctx.lineWidth=1; ctx.stroke();
+    }
+    /* polygon */
+    ctx.beginPath();
+    axes.forEach(function(a,i){ var p=pt(i,a.v/max); i===0?ctx.moveTo(p.x,p.y):ctx.lineTo(p.x,p.y); });
+    ctx.closePath(); ctx.fillStyle='rgba(59,130,212,0.22)'; ctx.fill();
+    ctx.strokeStyle=COLORS.blue; ctx.lineWidth=2; ctx.stroke();
+    /* dots */
+    axes.forEach(function(a,i){
+      var p=pt(i,a.v/max);
+      ctx.beginPath(); ctx.arc(p.x,p.y,4,0,2*Math.PI);
+      ctx.fillStyle=COLORS.blue; ctx.fill();
+      ctx.strokeStyle='#fff'; ctx.lineWidth=1.5; ctx.stroke();
+    });
+    /* labels */
+    sf(ctx,10,'600'); ctx.fillStyle=COLORS.text; ctx.textAlign='center'; ctx.textBaseline='middle';
+    axes.forEach(function(a,i){ var p=pt(i,1.24); ctx.fillText(a.lbl,p.x,p.y); });
+  })();
+
+  /* ── CHART 4: Horizontal bar — sasaran vs kemajuan ── */
+  (function(){
+    var c=document.getElementById('chartHBar'); if(!c)return;
+    var ctx=c.getContext('2d');
+    var items=[
+      {lbl:'Item 1 — eBook AR',  pct:55, col:COLORS.blue},
+      {lbl:'Item 2 — Video PdP', pct:40, col:COLORS.green},
+      {lbl:'Item 3 — MC',        pct:30, col:COLORS.amber},
+      {lbl:'Item 4 — Video AI',  pct:35, col:COLORS.purple}
+    ];
+    var lw=148, bh=22, gap=24, padT=14, barW=520-lw-44;
+    items.forEach(function(item,i){
+      var y=padT+i*(bh+gap);
+      /* label */
+      sf(ctx,11,'600'); ctx.fillStyle=COLORS.text; ctx.textAlign='right'; ctx.textBaseline='middle';
+      ctx.fillText(item.lbl, lw-8, y+bh/2);
+      /* bg */
+      roundRect(ctx,lw,y,barW,bh,4); ctx.fillStyle=COLORS.gray; ctx.fill();
+      /* fill */
+      var pw=Math.max(10,barW*item.pct/100);
+      roundRect(ctx,lw,y,pw,bh,4); ctx.fillStyle=item.col; ctx.fill();
+      /* pct text */
+      sf(ctx,11,'700'); ctx.fillStyle='#fff'; ctx.textAlign='left'; ctx.textBaseline='middle';
+      if(pw>28) ctx.fillText(item.pct+'%', lw+8, y+bh/2);
+      /* target */
+      sf(ctx,10); ctx.fillStyle=COLORS.muted; ctx.textAlign='left';
+      ctx.fillText('/ 100%', lw+barW+6, y+bh/2);
+    });
+    /* x ticks */
+    [0,25,50,75,100].forEach(function(p){
+      var x=lw+barW*p/100;
+      ctx.beginPath(); ctx.moveTo(x, padT+items.length*(bh+gap));
+      ctx.lineTo(x, padT+items.length*(bh+gap)+5);
+      ctx.strokeStyle='#e5e7eb'; ctx.lineWidth=1; ctx.stroke();
+      sf(ctx,9); ctx.fillStyle=COLORS.muted; ctx.textAlign='center'; ctx.textBaseline='top';
+      ctx.fillText(p+'%', x, padT+items.length*(bh+gap)+7);
+    });
+  })();
+
+  /* ── CHART 5: Stacked bar — agihan item per jabatan ── */
+  (function(){
+    var c=document.getElementById('chartStack'); if(!c)return;
+    var ctx=c.getContext('2d');
+    var depts=[
+      {lbl:'JPH', vals:[1,0,0,1]},
+      {lbl:'JP',  vals:[1,0,0,0]},
+      {lbl:'JPA', vals:[1,0,0,0]},
+      {lbl:'JMSK',vals:[1,0,0,0]},
+      {lbl:'JKE', vals:[0,1,0,0]},
+      {lbl:'JKA', vals:[0,1,1,0]},
+      {lbl:'JTMK',vals:[0,0,0,1]}
+    ];
+    var iCols=[COLORS.blue,COLORS.green,COLORS.amber,COLORS.purple];
+    var n=depts.length, padL=10, padB=26, padT=14, padR=8;
+    var plotW=520-padL-padR, plotH=200-padT-padB;
+    var bw=Math.floor(plotW/n)-10, maxV=2;
+
+    depts.forEach(function(d,i){
+      var x=padL+i*(plotW/n)+(plotW/n-bw)/2;
+      var sY=200-padB, total=d.vals.reduce(function(s,v){return s+v;},0);
+      d.vals.forEach(function(v,j){
+        if(!v)return;
+        var bh=Math.round((plotH/maxV)*v)-2;
+        sY-=bh;
+        roundRect(ctx,x,sY,bw,bh,3); ctx.fillStyle=iCols[j]; ctx.fill();
+        sY-=2;
+      });
+      sf(ctx,10,'600'); ctx.fillStyle=COLORS.text; ctx.textAlign='center'; ctx.textBaseline='top';
+      ctx.fillText(d.lbl, x+bw/2, 200-padB+5);
+      if(total>0){
+        sf(ctx,10,'700'); ctx.fillStyle=COLORS.text; ctx.textBaseline='bottom';
+        var topY=200-padB-total*(plotH/maxV)-2;
+        ctx.fillText(total, x+bw/2, topY);
+      }
+    });
+    /* y axis */
+    [0,1,2].forEach(function(v){
+      var y=200-padB-v*(plotH/maxV);
+      ctx.beginPath(); ctx.moveTo(padL,y); ctx.lineTo(520-padR,y);
+      ctx.strokeStyle='#f0f2f5'; ctx.lineWidth=1; ctx.stroke();
+      sf(ctx,9); ctx.fillStyle=COLORS.muted; ctx.textAlign='right'; ctx.textBaseline='middle';
+      ctx.fillText(v, padL+14, y);
+    });
+  })();
+</script>
+</body>
+</html>
